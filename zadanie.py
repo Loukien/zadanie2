@@ -7,7 +7,7 @@ import os
 
 # Konfiguracja logowania
 logging.basicConfig(filename="server.log", level=logging.INFO, format="%(asctime)s - %(message)s")
-logging.info("Uruchomiono serwer. Autor: Imię Nazwisko Studenta")
+logging.info("Uruchomiono serwer. Autor: Kacper Pasturczak")
 
 # Inicjalizacja aplikacji Flask
 app = Flask(__name__)

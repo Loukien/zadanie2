@@ -1,6 +1,7 @@
 # Użyj obrazu bazowego Pythona
 FROM python:3.9
 
+
 # Ustaw katalog roboczy
 WORKDIR /app
 
@@ -18,3 +19,4 @@ EXPOSE 5000
 
 # Uruchom aplikację
 CMD ["python", "app.py"]
+
