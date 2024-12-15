@@ -1,4 +1,4 @@
-name: GHAction example_dodatkowe
+name: GHAction example
 
 on:
   workflow_dispatch:
@@ -49,31 +49,18 @@ jobs:
           cache-to: |
             type=registry,ref=${{ vars.DOCKERHUB_USERNAME }}/example:cache  
           tags: ${{ steps.meta.outputs.tags }}
-          
-      - name: Generate SBOM with Syft
-        uses: anchore/syft-action@v1
+
+      - name: Generate SBOM and provenance
+        uses: anchore/syft-action@v0.6.0
         with:
           image: ${{ vars.DOCKERHUB_USERNAME }}/example:${{ steps.meta.outputs.tags }}
-          format: spdx-json
           output-file: sbom.json
 
-      - name: Attach SBOM to Provenance
-        run: |
-          echo "Attaching SBOM to provenance (example step)"
-          # Placeholder for attaching SBOM to provenance
-
       - name: Scan Docker image with Trivy
-        uses: aquasecurity/trivy-action@v0.11.0
+        uses: aquasecurity/trivy-action@v0.6.0
         with:
           image-ref: ${{ vars.DOCKERHUB_USERNAME }}/example:${{ steps.meta.outputs.tags }}
-          severity: HIGH,CRITICAL
           format: table
           exit-code: 1
-
-      - name: Upload SBOM and scan results as artifacts
-        uses: actions/upload-artifact@v3
-        with:
-          name: scan-and-sbom-results
-          path: |
-            sbom.json
-            trivy-report.txt
+          severity: CRITICAL,HIGH
+          ignore-unfixed: true
