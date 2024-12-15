@@ -51,13 +51,13 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}
 
       - name: Generate SBOM and provenance
-        uses: anchore/syft-action@v0.6.0
+        uses: anchore/syft-action@v0.1.0
         with:
           image: ${{ vars.DOCKERHUB_USERNAME }}/example:${{ steps.meta.outputs.tags }}
           output-file: sbom.json
 
       - name: Scan Docker image with Trivy
-        uses: aquasecurity/trivy-action@v0.6.0
+        uses: aquasecurity/trivy-action@master
         with:
           image-ref: ${{ vars.DOCKERHUB_USERNAME }}/example:${{ steps.meta.outputs.tags }}
           format: table
