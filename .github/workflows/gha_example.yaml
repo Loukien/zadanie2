@@ -49,10 +49,10 @@ jobs:
           cache-to: |
             type=registry,ref=${{ vars.DOCKERHUB_USERNAME }}/example:cache  
           tags: ${{ steps.meta.outputs.tags }}
-
-      - name: Scan Docker image with Docker Scout
-        uses: docker/scout-action@v1
+          
+      - name: Docker Scout
+        uses: docker/scout-action@v1.16.0
         with:
-          image: ${{ vars.DOCKERHUB_USERNAME }}/example:${{ steps.meta.outputs.tags }}
-          token: ${{ secrets.DOCKER_SCOUT_TOKEN }}
-          fail-build: true
+          command: cves
+          only-severities: high, critical
+          exit-code: true
